@@ -41,7 +41,7 @@ void clearmem(){
 int main(){
 	//ios_base::sync_with_stdio(false);
 	//cin >> N >> W >> H;
-	ll CycleNum,preCycle,addCycleLen,tmpCnt = 0;
+	ll CycleNum=0,preCycle=0,addCycleLen=0,tmpCnt = 0;
 	clearmem();
 	scanf ("%d%lld%lld",&N,&W,&H);
 	for (int i=1;i<=N;i++){
@@ -53,39 +53,27 @@ int main(){
 	if (prefSum[N] + N - 1 <= W ){
 		tmpCnt++;
 		remW = W - (prefSum[N] + N - 1);
-		//cout << "wut " << remW << endl;
+		cout << "wut " << remW << endl;
 		addCycleLen = prefSum[N] + N;
 		CycleNum = remW / addCycleLen;
 		remW %= addCycleLen;
 		tmpCnt += CycleNum;
 		preCycle = tmpCnt;
+		remW--;
 	}
+	cout << "Pre " << preCycle << endl;
 	int j = 1;
 
-	tmpCnt = 0;
-	for (int i=1;i<=N;i++,tmpCnt--){
+	for (int i=1;i<=N;i++){
 //		cout << curSum << " " << curSz << " " << remW << endl;
 		while (curSum + curSz + L[j] <= remW){
-			/*
-			if (j==1 && overChk){
-				overCycle = 1;
-			}
-			*/
 			addR(j);
 			j++;
-			
 			if (j>N){
 				j %= N;	
-				//overChk = 1;
 			}
-			tmpCnt++;
 		}
-		wordShift[i] = tmpCnt;
-		nextWord[i] = j;		
-		if (nextWord[i] > N){
-		       nextWord[i] = (nextWord[i] % N) ;
-		       //overCycle = 1;
-		}
+		nextWord[i] = j;
 		scWord[i] = nCy;
 		removeL(i);
 	}
